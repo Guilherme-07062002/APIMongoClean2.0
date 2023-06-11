@@ -1,11 +1,14 @@
 import { MongoClient, Db } from 'mongodb';
+import dotenv from 'dotenv';
+
+if (!process.env.URL) dotenv.config();
 
 export class MongoDBClient {
   private url: string;
   public db: Db | null;
 
   constructor() {
-    this.url = 'mongodb://127.0.0.1:27017/apiMongo';
+    this.url = process.env.URL || 'mongodb://localhost:27017';
     this.db = null;
   }
 
