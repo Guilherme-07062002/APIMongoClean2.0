@@ -4,7 +4,7 @@ import { User, CreateUserDTO } from "@/domain/entities";
 import { DuplicateEmailError } from "@/domain/errors";
 
 
-export class CreateUser implements IUserCase {
+export class CreateUserUseCase implements IUserCase {
     constructor(private readonly repo: IUserRepository) { }
 
     async perform(data: CreateUserDTO): Promise<User | DuplicateEmailError> {
