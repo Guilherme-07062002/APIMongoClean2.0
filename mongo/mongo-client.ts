@@ -4,8 +4,8 @@ export class MongoDBClient {
   private url: string;
   public db: Db | null;
 
-  constructor(url: string) {
-    this.url = url;
+  constructor() {
+    this.url = 'mongodb://127.0.0.1:27017/apiMongo';
     this.db = null;
   }
 
@@ -13,12 +13,12 @@ export class MongoDBClient {
     return new Promise((resolve, reject) => {
       MongoClient.connect(this.url)
         .then(client => {
-          console.log('Conexão com o MongoDB estabelecida');
+          console.log('Connection established with Mongo');
           this.db = client.db('apiMongo');
           resolve();
         })
         .catch(err => {
-          console.error('Erro ao conectar ao MongoDB:', err);
+          console.error('Connection with Mongo failed:', err);
           reject(err);
         });
     });
