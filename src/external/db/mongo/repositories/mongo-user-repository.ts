@@ -10,12 +10,20 @@ export class MongoUserRepository implements IUserRepository {
     async create(data: CreateUserDTO): Promise<User | DuplicateEmailError> {
         try {
             if (this.mongo.db != null) {
+                const collectionExists = await this.mongo.db.listCollections({ name: 'users' }).hasNext();
+                if (!collectionExists) {
+                    await this.mongo.db.createCollection('users');
+                }
+                console.log(data)
+
                 const user = await userModel.create(data);
+                
                 return user.toJSON() as User;
             } else {
                 throw new Error('MongoDB connection not established');
             }
         } catch (error) {
+            console.log(error);
             return new DuplicateEmailError();
         }
     }
